@@ -13,33 +13,41 @@ def build_ext(*args, **kwargs):
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
 
-if 'bootstrap' in sys.argv:
+if 'install' in sys.argv and not os.path.exists(library_dir):
     from tarballfetcher import download_and_extract_tarball
     download_and_extract_tarball(
         'http://snowball.tartarus.org/dist/libstemmer_c.tgz',
         expected_md5='6f32f8f81cd6fa0150333ab540af5e27')
-    sys.argv.remove('bootstrap')
-
-if not os.path.exists(library_dir):
-    sys.stderr.write(
-        'WARNING: Directory `%s` does not exist. ' % library_dir +
-        'To download it, invoke setup.py with `bootstrap`.\n')
 
 # Directories in libstemmer which contain libstemmer sources (ie, not
 # examples, etc).
 library_core_dirs = ('src_c', 'runtime', 'libstemmer', 'include')
 
-# Read the manifest of files in libstemmer.
-src_files = [os.path.join(library_dir, line.strip().replace(' \\', ''))
-             for line in open(os.path.join(library_dir, 'mkinc_utf8.mak'))
-             if len(line.strip()) > 2
-             and (line.strip().endswith('.c \\') or line.strip().endswith('.c'))
-             and os.path.split(line.strip().replace(' \\', ''))[0] in library_core_dirs]
+src_files = [
+    'libstemmer_c/src_c/stem_UTF_8_danish.c',
+    'libstemmer_c/src_c/stem_UTF_8_dutch.c',
+    'libstemmer_c/src_c/stem_UTF_8_english.c',
+    'libstemmer_c/src_c/stem_UTF_8_finnish.c',
+    'libstemmer_c/src_c/stem_UTF_8_french.c',
+    'libstemmer_c/src_c/stem_UTF_8_german.c',
+    'libstemmer_c/src_c/stem_UTF_8_hungarian.c',
+    'libstemmer_c/src_c/stem_UTF_8_italian.c',
+    'libstemmer_c/src_c/stem_UTF_8_norwegian.c',
+    'libstemmer_c/src_c/stem_UTF_8_porter.c',
+    'libstemmer_c/src_c/stem_UTF_8_portuguese.c',
+    'libstemmer_c/src_c/stem_UTF_8_romanian.c',
+    'libstemmer_c/src_c/stem_UTF_8_russian.c',
+    'libstemmer_c/src_c/stem_UTF_8_spanish.c',
+    'libstemmer_c/src_c/stem_UTF_8_swedish.c',
+    'libstemmer_c/src_c/stem_UTF_8_turkish.c',
+    'libstemmer_c/runtime/api.c',
+    'libstemmer_c/runtime/utilities.c',
+    'libstemmer_c/libstemmer/libstemmer_utf8.c',
+    'src/Stemmer.pyx',
+]
 
 # Set the include path to include libstemmer.
 include_dirs = ('src', os.path.join(library_dir, 'include'))
-
-src_files.append('src/Stemmer.pyx')
 
 long_description = r"""
 
