@@ -13,7 +13,7 @@ def build_ext(*args, **kwargs):
 # Directory which libstemmer sources are unpacked in.
 library_dir = 'libstemmer_c'
 
-if 'install' in sys.argv and not os.path.exists(library_dir):
+if any(command in sys.argv for command in ("install", "develop"))  and not os.path.exists(library_dir):
     from tarballfetcher import download_and_extract_tarball
     download_and_extract_tarball(
         'http://snowball.tartarus.org/dist/libstemmer_c.tgz',
