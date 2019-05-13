@@ -72,7 +72,7 @@ researchers wishing to reproduce results of earlier experiments.
 
 """.strip()
 
-version_str = '1.3.0'
+version_str = '1.3.1'
 setup(name = 'PyStemmer',
       version = version_str,
       author = 'Richard Boulton',
