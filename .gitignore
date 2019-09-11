@@ -1,7 +1,5 @@
 build
 dist
-libstemmer_c
-libstemmer_c.tgz
 html
 MANIFEST
 Stemmer.so
@@ -9,3 +7,4 @@ Stemmer.so
 src/Stemmer.c
 *.pyc
 __pycache__
+.DS_Store
